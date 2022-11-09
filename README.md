@@ -1,1 +1,1 @@
-# Rinux-Practice
+# linux-Practice
