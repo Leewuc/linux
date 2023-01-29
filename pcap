@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include "pcap.h"
+
+int main(){
+	pcap_if_t *alldevs=NULL;
+            char errbuf[PCAP_ERRBUF_SIZE];
+
+	// find all network adapters
+	if (pcap_findalldevs(&alldevs, errbuf)==-1){
+		printf("dev find failed\n");
+		return -1;
+	}
+	if (alldevs==NULL){
+		printf("no devs found\n");
+		return -1;
+	}
+	// print them
+	pcap_if_t *d; int i;
+	for(d=alldevs,i=0; d!=NULL; d=d->next){
+		printf("%d-th dev: %s ", ++i, d->name);
+		if (d->description)
+			printf(" (%s)\n", d->description);
+		else
+			printf(" (No description available)\n");
+	}
+	return 0;
+}
